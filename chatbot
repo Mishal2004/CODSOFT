@@ -1,0 +1,34 @@
+//chatbot
+import time
+import random
+greetings = ["Hello!", "Hi there!", "Hey!", "Hi! How are you?"]
+how_are_you_responses = [
+    "I'm doing great, thank you for asking! How about you?",
+    "I'm just a chatbot, but I'm doing fine. What about you?",
+    "All good! How can I assist you today?"]
+goodbyes = ["Goodbye! Have a nice day!", "See you later!", "Take care!", "Bye!"]
+def chatbot(user_input):
+    time.sleep(random.uniform(1, 2))
+    if "hello" in user_input.lower() or "hi" in user_input.lower():
+        return random.choice(greetings)
+    elif "how are you" in user_input.lower():
+        return random.choice(how_are_you_responses)
+    elif "your name" in user_input.lower():
+        return "I'm a chatbot, but you can call me whatever you'd like. What's your name?"
+    elif "time" in user_input.lower():
+        current_time = time.strftime("%I:%M %p", time.localtime())
+        return f"Right now it's {current_time}. What else can I help with?"
+    elif "bye" in user_input.lower() or "goodbye" in user_input.lower():
+        return random.choice(goodbyes)
+    elif "help" in user_input.lower():
+        return "I'm here to help with small queries like the time, or you can ask me random things!"
+    else:
+        return "Hmm, I'm not sure I understand. Can you elaborate a bit?"
+print("Chatbot is ready to chat!")
+while True:
+    user_input = input("You: ")
+    if "bye" in user_input.lower():
+        print(f"Chatbot: {random.choice(goodbyes)}")
+        break
+    response = chatbot(user_input)
+    print(f"Chatbot: {response}")
