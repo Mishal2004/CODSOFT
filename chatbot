@@ -1,4 +1,3 @@
-//chatbot
 import time
 import random
 greetings = ["Hello!", "Hi there!", "Hey!", "Hi! How are you?"]
