@@ -1,0 +1,26 @@
+import pandas as pd
+from sklearn.neighbors import NearestNeighbors
+import numpy as np
+data = {'User': ['User1', 'User2', 'User3', 'User4', 'User5'],
+        'Movie A': [5, 4, np.nan, 5, 3],
+        'Movie B': [3, np.nan, 4, np.nan, 3],
+        'Movie C': [np.nan, 3, 2, np.nan, np.nan],
+        'Movie D': [1, 1, np.nan, 2, 4],
+        'Movie E': [np.nan, 2, 5, 4, np.nan]}
+df = pd.DataFrame(data)
+df.set_index('User', inplace=True)
+df.fillna(0, inplace=True)
+print("User-Movie Ratings Matrix:")
+print(df)
+model_knn = NearestNeighbors(metric='cosine', algorithm='brute')
+model_knn.fit(df)
+chosen_user = 'User1'
+chosen_user_data = df.loc[chosen_user].values.reshape(1, -1)
+distances, indices = model_knn.kneighbors(chosen_user_data, n_neighbors=3)
+print(f"\nUsers similar to {chosen_user}:")
+for i in range(1, len(indices[0])):
+    print(f"{df.index[indices[0][i]]} (Distance: {distances[0][i]:.2f})")
+similar_user_indices = indices[0][1:]
+recommended_movies = df.iloc[similar_user_indices].mean().sort_values(ascending=False)
+print(f"\nRecommended Movies for {chosen_user}:")
+print(recommended_movies)
